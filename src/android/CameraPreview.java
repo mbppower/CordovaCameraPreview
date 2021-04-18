@@ -49,6 +49,7 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
   private static final String START_CAMERA_ACTION = "startCamera";
   private static final String STOP_CAMERA_ACTION = "stopCamera";
   private static final String PREVIEW_SIZE_ACTION = "setPreviewSize";
+  private static final String PREVIEW_DIMENSIONS_ACTION = "setPreviewDimensions";
   private static final String SWITCH_CAMERA_ACTION = "switchCamera";
   private static final String TAKE_PICTURE_ACTION = "takePicture";
   private static final String START_RECORD_VIDEO_ACTION = "startRecordVideo";
@@ -146,6 +147,8 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
       return getMaxZoom(callbackContext);
     } else if (PREVIEW_SIZE_ACTION.equals(action)) {
       return setPreviewSize(args.getInt(0), args.getInt(1), callbackContext);
+    } else if (PREVIEW_DIMENSIONS_ACTION.equals(action)) {
+      return setPreviewDimensions(args.getInt(0), args.getInt(1), args.getInt(2), args.getInt(3), callbackContext);
     } else if (SUPPORTED_FLASH_MODES_ACTION.equals(action)) {
       return getSupportedFlashModes(callbackContext);
     } else if (GET_FLASH_MODE_ACTION.equals(action)) {
@@ -844,6 +847,22 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
   }
 
   private boolean setPreviewSize(int width, int height, CallbackContext callbackContext) {
+    if(this.hasCamera(callbackContext) == false){
+      return true;
+    }
+
+    Camera camera = fragment.getCamera();
+    Camera.Parameters params = camera.getParameters();
+
+    params.setPreviewSize(width, height);
+    fragment.setCameraParameters(params);
+    camera.startPreview();
+
+    callbackContext.success();
+    return true;
+  }
+
+  private boolean setPreviewDimensions(int x, int y, int width, int height, CallbackContext callbackContext) {
     if(this.hasCamera(callbackContext) == false){
       return true;
     }

@@ -23,7 +23,8 @@
     <source-file src="src/android/camera_theme.xml" target-dir="res/values" />
     <source-file src="src/android/camera_ids.xml" target-dir="res/values" />
 
-    <framework src="androidx.exifinterface:exifinterface:1.2.0" />
+    <preference name="ANDROID_SUPPORT_LIBRARY_VERSION" default="26+"/>
+    <framework src="com.android.support:exifinterface:$ANDROID_SUPPORT_LIBRARY_VERSION" />
 
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="CameraPreview">

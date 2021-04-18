@@ -147,6 +147,16 @@ CameraPreview.setPreviewSize = function(dimensions, onSuccess, onError) {
   exec(onSuccess, onError, PLUGIN_NAME, "setPreviewSize", [dimensions.width, dimensions.height]);
 };
 
+CameraPreview.setPreviewDimensions = function(dimensions, onSuccess, onError) {
+  dimensions = dimensions || {};
+  dimensions.x = dimensions.x || 0;
+  dimensions.y = dimensions.y || 0;
+  dimensions.width = dimensions.width || window.screen.width;
+  dimensions.height = dimensions.height || window.screen.height;
+
+  exec(onSuccess, onError, PLUGIN_NAME, "setPreviewDimensions", [dimensions.x, dimensions.y, dimensions.width, dimensions.height]);
+};
+
 CameraPreview.getSupportedPictureSizes = function(onSuccess, onError) {
   exec(onSuccess, onError, PLUGIN_NAME, "getSupportedPictureSizes", []);
 };
